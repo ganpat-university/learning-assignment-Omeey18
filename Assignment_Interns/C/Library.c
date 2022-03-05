@@ -116,13 +116,23 @@ void display(){
 }
 
 void disp_author(){
+    char temp[20];
     printf("Total numbers of books are %d\n\n",T_book);
      if(T_book<1){
          printf("No Books are here...!\n");
      }
      else{
+            printf("\nEnter Author Name: ");
+            scanf("%s",temp);
             for(int i=0;i<T_book;i++){
-                printf("Author name: %s\n",b[i].author);
+                if(strcmp(b[i].author,temp)==0){
+                    printf("Book no. %d\n",i+1);
+                    printf("Accession number: %d\n",b[i].ano);
+                    printf("Title of the book: %s\n",b[i].title);
+                    printf("Price: %d\n",b[i].price);
+                    printf("Issue status yes/no(1/0): %d\n\n",b[i].flag);
+                    
+                }
             }
      }
 }
@@ -150,14 +160,28 @@ void count(){
     
 }
 
-void acc_order(){
-    printf("Total numbers of books are %d\n\n",T_book);
-     if(T_book<1){
-         printf("No Books are here...!\n");
-     }
-     else{
-            for(int i=0;i<T_book;i++){
-                printf("Accession number: %d\n",b[i].ano);
-            }
-     }
+void acc_order()
+{
+    int i, j, indexmin;
+	struct library temp;
+	for(i = 0; i<T_book-1; i++) 
+	{
+		indexmin = i;  
+		for(j = i+1; j<T_book; j++)
+			if(b[j].ano < b[indexmin].ano)
+				indexmin = j;
+
+		temp = b[i];
+		b[i] = b[indexmin];
+		b[indexmin] = temp;
+	}
+	for(int i=0;i<T_book;i++)
+    {
+        printf("\nAccession Number: %d",b[i].ano);
+        printf("\nBook title: %s",b[i].title);
+        printf("\nBook author: %s",b[i].author);
+        printf("\nBook price: %d",b[i].price);
+        printf("\nIssue status(1-yes/0-No): %d",b[i].flag);
+        printf("\n");
+    }
 }
